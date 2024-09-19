@@ -54,23 +54,23 @@ class ConfigOverview {
 
   static Widget _buildGlassSection() {
     return ConfigOverview._buildConnectionConfigSection('Glass', true, [
-      TextField(
-        decoration: const InputDecoration(
+      /*const TextField(
+        decoration: InputDecoration(
           labelText: 'address',
           border: OutlineInputBorder(),
         ),
-      )
+      )*/
     ]);
   }
 
   static Widget _buildProcessorSection() {
     return ConfigOverview._buildConnectionConfigSection('Processor', true, [
-      TextField(
-        decoration: const InputDecoration(
+      /*const TextField(
+        decoration: InputDecoration(
           labelText: 'address',
           border: OutlineInputBorder(),
         ),
-      )
+      )*/
     ]);
   }
 }
