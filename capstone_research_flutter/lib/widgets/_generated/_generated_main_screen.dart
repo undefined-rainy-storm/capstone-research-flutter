@@ -5,7 +5,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 }
 
 class ConnectionConfigScreen extends StatelessWidget {
-  const ConnectionConfigScreen({Key? key}) : super(key: key);
+  const ConnectionConfigScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,22 +73,22 @@ class ConnectionConfigScreen extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        TextField(
-          decoration: const InputDecoration(
+        const TextField(
+          decoration: InputDecoration(
             labelText: 'Field 1',
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
-        TextField(
-          decoration: const InputDecoration(
+        const TextField(
+          decoration: InputDecoration(
             labelText: 'Field 2',
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 10),
-        TextField(
-          decoration: const InputDecoration(
+        const TextField(
+          decoration: InputDecoration(
             labelText: 'Field 3',
             border: OutlineInputBorder(),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../extensions/num.dart';
 
 class ConfigOverview {
   static Widget build(BuildContext context) {
@@ -9,40 +10,63 @@ class ConfigOverview {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
+                  children: <Widget>[
+                    Text(
                       "End Point Connection Config",
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          fontSize: 14.pixelScale(context),
+                          fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 20),
-                    ConfigOverview._buildGlassSection(),
-                    const SizedBox(height: 20),
-                    ConfigOverview._buildProcessorSection()
+                    SizedBox(
+                        height: 14
+                            .pixelScale(context)
+                            .addSpacingOnKeyboardVisible(context)),
+                    ConfigOverview._buildGlassSection(context),
+                    SizedBox(
+                        height: 14
+                            .pixelScale(context)
+                            .addSpacingOnKeyboardVisible(context)),
+                    ConfigOverview._buildProcessorSection(context),
+                    SizedBox(
+                      height: 30
+                          .pixelScale(context)
+                          .addSpacingOnKeyboardVisible(context),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Add config action here
+                      },
+                      child: const Text("config.."),
+                    ),
                   ],
                 ))));
   }
 
-  static Widget _buildConnectionConfigSection(
-      String label, bool isConnected, List<Widget> fields) {
+  static Widget _buildConnectionConfigSection(String label, bool isConnected,
+      List<Widget> fields, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: <Widget>[
         Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
+          children: <Widget>[
             Text(
               label,
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 12.pixelScale(context)),
             ),
-            const SizedBox(width: 10),
+            SizedBox(
+                width: 10
+                    .pixelScale(context)
+                    .addSpacingOnKeyboardVisible(context)),
             Icon(
               isConnected ? Icons.check : Icons.close,
               color: isConnected ? Colors.green : Colors.red,
             ),
           ],
         ),
-        const SizedBox(height: 10),
+        SizedBox(
+            height:
+                10.pixelScale(context).addSpacingOnKeyboardVisible(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
@@ -52,25 +76,35 @@ class ConfigOverview {
     );
   }
 
-  static Widget _buildGlassSection() {
-    return ConfigOverview._buildConnectionConfigSection('Glass', true, [
-      /*const TextField(
-        decoration: InputDecoration(
-          labelText: 'address',
-          border: OutlineInputBorder(),
-        ),
-      )*/
-    ]);
+  static Widget _buildGlassSection(BuildContext context) {
+    return ConfigOverview._buildConnectionConfigSection(
+        'Glass',
+        true,
+        [
+          const Flexible(
+              child: TextField(
+            decoration: InputDecoration(
+              labelText: 'address',
+              border: OutlineInputBorder(),
+            ),
+          ))
+        ],
+        context);
   }
 
-  static Widget _buildProcessorSection() {
-    return ConfigOverview._buildConnectionConfigSection('Processor', true, [
-      /*const TextField(
-        decoration: InputDecoration(
-          labelText: 'address',
-          border: OutlineInputBorder(),
-        ),
-      )*/
-    ]);
+  static Widget _buildProcessorSection(BuildContext context) {
+    return ConfigOverview._buildConnectionConfigSection(
+        'Processor',
+        true,
+        [
+          const Flexible(
+              child: TextField(
+            decoration: InputDecoration(
+              labelText: 'address',
+              border: OutlineInputBorder(),
+            ),
+          ))
+        ],
+        context);
   }
 }
