@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../extensions/num.dart';
+import './config_load_from_qr.dart';
 
 class ConfigOverview {
   static Widget build(BuildContext context) {
@@ -34,7 +35,10 @@ class ConfigOverview {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // Add config action here
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const QRViewWidget()));
                       },
                       child: const Text("config.."),
                     ),
