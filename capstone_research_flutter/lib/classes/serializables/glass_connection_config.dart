@@ -1,7 +1,7 @@
 class GlassConnectionConfig {
-  final String address;
+  String address;
 
-  GlassConnectionConfig(this.address);
+  GlassConnectionConfig({required this.address});
 
   GlassConnectionConfig.fromJson(Map<String, dynamic> json)
       : address = json['address'] as String;

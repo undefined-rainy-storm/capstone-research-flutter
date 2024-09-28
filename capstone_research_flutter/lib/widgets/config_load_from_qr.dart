@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:capstone_research_flutter/classes/serializables/config.dart';
+import 'package:capstone_research_flutter/classes/globals.dart' as globals;
 import 'package:capstone_research_flutter/extensions/num.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -87,7 +88,12 @@ class _QRViewState extends State<QRViewWidget> {
         qrText = scanData.code;
       });
       if (scanData.code.runtimeType != String) return;
-      Config configRead = Config.fromJson(jsonDecode(scanData.code!));
+      
+      try {
+        globals.config = Config.fromJson(jsonDecode(scanData.code!));
+      } on TypeError {
+        return;
+      }
     });
   }
 

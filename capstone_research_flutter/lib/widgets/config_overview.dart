@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:capstone_research_flutter/classes/globals.dart' as globals;
 import '../extensions/num.dart';
 import './config_load_from_qr.dart';
 
@@ -20,18 +21,15 @@ class ConfigOverview {
                     ),
                     SizedBox(
                         height: 14
-                            .pixelScale(context)
-                            .addSpacingOnKeyboardVisible(context)),
+                            .pixelScale(context)),
                     ConfigOverview._buildGlassSection(context),
                     SizedBox(
                         height: 14
-                            .pixelScale(context)
-                            .addSpacingOnKeyboardVisible(context)),
+                            .pixelScale(context)),
                     ConfigOverview._buildProcessorSection(context),
                     SizedBox(
                       height: 30
-                          .pixelScale(context)
-                          .addSpacingOnKeyboardVisible(context),
+                          .pixelScale(context),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -60,8 +58,7 @@ class ConfigOverview {
             ),
             SizedBox(
                 width: 10
-                    .pixelScale(context)
-                    .addSpacingOnKeyboardVisible(context)),
+                    .pixelScale(context)),
             Icon(
               isConnected ? Icons.check : Icons.close,
               color: isConnected ? Colors.green : Colors.red,
@@ -70,7 +67,7 @@ class ConfigOverview {
         ),
         SizedBox(
             height:
-                10.pixelScale(context).addSpacingOnKeyboardVisible(context)),
+                10.pixelScale(context)),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.min,
@@ -85,12 +82,16 @@ class ConfigOverview {
         'Glass',
         true,
         [
-          const Flexible(
+          Flexible(
               child: TextField(
-            decoration: InputDecoration(
+            controller: TextEditingController(text: globals.config.connectionConfig.glassConnectionConfig.address),
+            decoration: const InputDecoration(
               labelText: 'address',
               border: OutlineInputBorder(),
             ),
+            onChanged: (text) {
+              globals.config.connectionConfig.glassConnectionConfig.address = text;
+            }
           ))
         ],
         context);
@@ -101,12 +102,16 @@ class ConfigOverview {
         'Processor',
         true,
         [
-          const Flexible(
+          Flexible(
               child: TextField(
-            decoration: InputDecoration(
+            controller: TextEditingController(text: globals.config.connectionConfig.processorConnectionConfig.address),
+            decoration: const InputDecoration(
               labelText: 'address',
               border: OutlineInputBorder(),
             ),
+            onChanged: (text) {
+              globals.config.connectionConfig.processorConnectionConfig.address = text;
+            }
           ))
         ],
         context);

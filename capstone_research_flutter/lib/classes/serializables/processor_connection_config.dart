@@ -1,7 +1,7 @@
 class ProcessorConnectionConfig {
-  final String address;
+  String address;
 
-  ProcessorConnectionConfig(this.address);
+  ProcessorConnectionConfig({required this.address});
 
   ProcessorConnectionConfig.fromJson(Map<String, dynamic> json)
       : address = json['address'] as String;

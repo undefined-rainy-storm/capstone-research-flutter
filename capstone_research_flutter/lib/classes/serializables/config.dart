@@ -2,7 +2,7 @@ import 'package:capstone_research_flutter/classes/serializables/glass_connection
 import 'package:capstone_research_flutter/classes/serializables/processor_connection_config.dart';
 
 class Config {
-  final ConnectionConfig connectionConfig;
+  ConnectionConfig connectionConfig;
 
   Config({
     required this.connectionConfig,
@@ -20,8 +20,8 @@ class Config {
 }
 
 class ConnectionConfig {
-  final GlassConnectionConfig glassConnectionConfig;
-  final ProcessorConnectionConfig processorConnectionConfig;
+  GlassConnectionConfig glassConnectionConfig;
+  ProcessorConnectionConfig processorConnectionConfig;
 
   ConnectionConfig({
     required this.glassConnectionConfig,
