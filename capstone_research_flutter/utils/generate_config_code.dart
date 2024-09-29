@@ -13,12 +13,14 @@ const int configMarginY = configMargin ~/ 2;
 void main() {
   String serialized = jsonEncode(Config(
     connectionConfig: ConnectionConfig(
-      glassConnectionConfig: GlassConnectionConfig(address: init.glassConnectionConfigAddress),
-      processorConnectionConfig: ProcessorConnectionConfig(address: init.processorConnectionConfigAddress)
+      glassConnectionConfig: GlassConnectionConfig(address: 'init.glassConnectionConfigAddress'),
+      processorConnectionConfig: ProcessorConnectionConfig(address: 'init.processorConnectionConfigAddress')
     )
   ).toJson());
+
+  print(serialized);
   
-  final qrCode = QrCode(6, QrErrorCorrectLevel.L)
+  final qrCode = QrCode(10, QrErrorCorrectLevel.L)
     ..addData(serialized);
   final qrImage = QrImage(qrCode);
 

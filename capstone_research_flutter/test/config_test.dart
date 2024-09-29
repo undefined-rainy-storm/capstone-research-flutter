@@ -5,24 +5,25 @@ import 'package:capstone_research_flutter/classes/serializables/glass_connection
 import 'package:capstone_research_flutter/classes/serializables/processor_connection_config.dart';
 
 void main() {
-  test('Deserialized serialized config must be same as origin config', () {
-    Config config = Config(
-      connectionConfig: ConnectionConfig(
-        glassConnectionConfig: GlassConnectionConfig(
-          address: 'GlassConnectionConfigTest'
-        ),
-        processorConnectionConfig: ProcessorConnectionConfig(
-          address: 'ProcessorConnectionConfigTest'
-        )
+  Config config = Config(
+    connectionConfig: ConnectionConfig(
+      glassConnectionConfig: GlassConnectionConfig(
+        address: 'init.glassConnectionConfigAddress'
+      ),
+      processorConnectionConfig: ProcessorConnectionConfig(
+        address: 'init.processorConnectionConfigAddress'
       )
-    );
-    Config deserializedSerializedConfig = Config.fromJson(config.toJson());
+    )
+  );
+  String serialized = '{"connection_config":{"glass_connection_config":{"address":"init.glassConnectionConfigAddress"},"processor_connection_config":{"address":"init.processorConnectionConfigAddress"}}}';
 
-    expect(config.toJson(), deserializedSerializedConfig.toJson());
+  test('Deserialized serialized config must be same as origin config', () {
+    expect(jsonEncode(config.toJson()), serialized);
   });
-  try {
-    Config.fromJson(json.decode('{"undefined": "undefined"}'));
-  } on TypeError {
-    print(1);
-  }
+
+  test('Check is serialized config value can be deserialized correctly', () {
+    Config decoded = Config.fromJson(jsonDecode(serialized));
+    expect(config.connectionConfig.glassConnectionConfig.address, decoded.connectionConfig.glassConnectionConfig.address);
+    expect(config.connectionConfig.processorConnectionConfig.address, decoded.connectionConfig.processorConnectionConfig.address);
+  });
 }

@@ -8,7 +8,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ConfigLoadFromQR {
   static Widget build(BuildContext context) {
-    return QRViewWidget();
+    return const QRViewWidget();
   }
 }
 
@@ -62,7 +62,7 @@ class _QRViewState extends State<QRViewWidget> {
           flex: 5,
           child: QRView(
             key: qrKey,
-            onQRViewCreated: _onQRViewCreated,
+            onQRViewCreated: (controller) => _onQRViewCreated(controller, context),
           ),
         ),
         Expanded(
@@ -79,7 +79,7 @@ class _QRViewState extends State<QRViewWidget> {
     ));
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller, BuildContext context) {
     setState(() {
       this.controller = controller;
     });
@@ -93,6 +93,10 @@ class _QRViewState extends State<QRViewWidget> {
         globals.config = Config.fromJson(jsonDecode(scanData.code!));
       } on TypeError {
         return;
+      }
+      
+      if (context.mounted) {
+        Navigator.pop(context);
       }
     });
   }

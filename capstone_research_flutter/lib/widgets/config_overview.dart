@@ -5,6 +5,19 @@ import './config_load_from_qr.dart';
 
 class ConfigOverview {
   static Widget build(BuildContext context) {
+    return const ConfigOverviewWidget();
+  }
+}
+
+class ConfigOverviewWidget extends StatefulWidget {
+  const ConfigOverviewWidget({super.key});
+  
+  @override
+  _ConfigOverviewState createState() => _ConfigOverviewState();
+}
+
+class _ConfigOverviewState extends State<ConfigOverviewWidget> {
+  @override build(BuildContext context) {
     return Scaffold(
         body: Center(
             child: Padding(
@@ -22,29 +35,44 @@ class ConfigOverview {
                     SizedBox(
                         height: 14
                             .pixelScale(context)),
-                    ConfigOverview._buildGlassSection(context),
+                    _buildGlassSection(context),
                     SizedBox(
                         height: 14
                             .pixelScale(context)),
-                    ConfigOverview._buildProcessorSection(context),
+                    _buildProcessorSection(context),
                     SizedBox(
                       height: 30
                           .pixelScale(context),
                     ),
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const QRViewWidget()));
-                      },
+                      onPressed: () {_navigateAndDisplayQRViewWidget(context);},
                       child: const Text("config.."),
                     ),
                   ],
                 ))));
   }
 
-  static Widget _buildConnectionConfigSection(String label, bool isConnected,
+  Future<void> _navigateAndDisplayQRViewWidget(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const QRViewWidget()),
+    );
+
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    if (!context.mounted) return;
+
+    _updateTextField();
+  }
+
+  void _updateTextField() {
+    _controllerGlassConnectionConfigAddress.text = globals.config.connectionConfig.glassConnectionConfig.address;
+    _controllerProcessorConnectionConfigAddress.text = globals.config.connectionConfig.processorConnectionConfig.address;
+  }
+
+  Widget _buildConnectionConfigSection(String label, bool isConnected,
       List<Widget> fields, BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,14 +105,14 @@ class ConfigOverview {
     );
   }
 
-  static Widget _buildGlassSection(BuildContext context) {
-    return ConfigOverview._buildConnectionConfigSection(
+  final TextEditingController _controllerGlassConnectionConfigAddress = TextEditingController(text: globals.config.connectionConfig.glassConnectionConfig.address);
+  Widget _buildGlassSection(BuildContext context) {
+    return _buildConnectionConfigSection(
         'Glass',
         true,
         [
-          Flexible(
-              child: TextField(
-            controller: TextEditingController(text: globals.config.connectionConfig.glassConnectionConfig.address),
+          Flexible(child: TextField(
+            controller: _controllerGlassConnectionConfigAddress,
             decoration: const InputDecoration(
               labelText: 'address',
               border: OutlineInputBorder(),
@@ -97,14 +125,14 @@ class ConfigOverview {
         context);
   }
 
-  static Widget _buildProcessorSection(BuildContext context) {
-    return ConfigOverview._buildConnectionConfigSection(
+  final TextEditingController _controllerProcessorConnectionConfigAddress = TextEditingController(text: globals.config.connectionConfig.processorConnectionConfig.address);
+  Widget _buildProcessorSection(BuildContext context) {
+    return _buildConnectionConfigSection(
         'Processor',
         true,
         [
-          Flexible(
-              child: TextField(
-            controller: TextEditingController(text: globals.config.connectionConfig.processorConnectionConfig.address),
+          Flexible(child: TextField(
+            controller: _controllerProcessorConnectionConfigAddress,
             decoration: const InputDecoration(
               labelText: 'address',
               border: OutlineInputBorder(),
