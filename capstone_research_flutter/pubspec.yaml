@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   qr_code_scanner: ^1.0.1
   qr: ^3.0.2
+  flutter_foreground_task: ^8.10.4
 
 dev_dependencies:
   flutter_test:

@@ -12,16 +12,16 @@ const int configMarginY = configMargin ~/ 2;
 
 void main() {
   String serialized = jsonEncode(Config(
-    connectionConfig: ConnectionConfig(
-      glassConnectionConfig: GlassConnectionConfig(address: 'init.glassConnectionConfigAddress'),
-      processorConnectionConfig: ProcessorConnectionConfig(address: 'init.processorConnectionConfigAddress')
-    )
-  ).toJson());
+          connectionConfig: ConnectionConfig(
+              glassConnectionConfig: GlassConnectionConfig(
+                  address: 'init.glassConnectionConfigAddress'),
+              processorConnectionConfig:
+                  ProcessorConnectionConfig(address: 'http://127.0.0.1:5000')))
+      .toJson());
 
   print(serialized);
-  
-  final qrCode = QrCode(10, QrErrorCorrectLevel.L)
-    ..addData(serialized);
+
+  final qrCode = QrCode(10, QrErrorCorrectLevel.L)..addData(serialized);
   final qrImage = QrImage(qrCode);
 
   int textWidth = qrImage.moduleCount;
@@ -44,13 +44,9 @@ void main() {
     // content
     for (var x = 0; x < textWidth; x++) {
       if (y * 2 + 1 < qrImage.moduleCount) {
-        stdout.write(
-          qrImage.isDark(y * 2, x) ? (
-            qrImage.isDark(y * 2 + 1, x) ? ' ' : '▄'
-          ) : (
-            qrImage.isDark(y * 2 + 1, x) ? '▀' : '█'
-          )
-        );
+        stdout.write(qrImage.isDark(y * 2, x)
+            ? (qrImage.isDark(y * 2 + 1, x) ? ' ' : '▄')
+            : (qrImage.isDark(y * 2 + 1, x) ? '▀' : '█'));
       } else {
         stdout.write(qrImage.isDark(y * 2, x) ? '▄' : '█');
       }
